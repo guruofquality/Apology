@@ -18,6 +18,7 @@
 #define INCLUDED_APOLOGY_EXECUTOR_HPP
 
 #include <Apology/Config.hpp>
+#include <Apology/Topology.hpp>
 #include <Apology/Worker.hpp>
 #include <Apology/Flow.hpp>
 #include <Theron/Defines.h>
@@ -29,7 +30,7 @@ namespace Apology
 struct APOLOGY_API Executor
 {
     //! Create a new Executor
-    Executor(void);
+    Executor(Topology *topology);
 
     //! Destroy the executor actor
     virtual ~Executor(void);
@@ -48,17 +49,18 @@ struct APOLOGY_API Executor
     template <typename Message>
     void post_all(const Message &msg);
 
+    Topology *_topology;
     std::vector<Flow> _flat_flows;
-    std::vector<Worker *> _workers;
+    std::vector<Worker *> _worker_set;
     Theron::Receiver _receiver;
 };
 
 template <typename Message>
 THERON_FORCEINLINE void Executor::post_all(const Message &msg)
 {
-    for (size_t i = 0; i < _workers.size(); i++)
+    for (size_t i = 0; i < _worker_set.size(); i++)
     {
-        _workers[i]->Push(msg, _receiver.GetAddress());
+        _worker_set[i]->Push(msg, _receiver.GetAddress());
         _receiver.Wait();
     }
 }
