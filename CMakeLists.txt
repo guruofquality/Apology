@@ -60,3 +60,4 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 # Do subdirectories
 ########################################################################
 add_subdirectory(lib)
+add_subdirectory(tests)

@@ -81,17 +81,17 @@ list(APPEND libapology_libs
 ########################################################################
 # Build the library
 ########################################################################
-add_library(apology STATIC ${libapology_sources})
-target_link_libraries(apology ${libapology_libs})
+add_library(Apology STATIC ${libapology_sources})
+target_link_libraries(Apology ${libapology_libs})
 #uncomment for SHARED library
-#set_target_properties(apology PROPERTIES DEFINE_SYMBOL "APOLOGY_DLL_EXPORTS")
-#set_target_properties(apology PROPERTIES COMPILE_DEFINITIONS "APOLOGY_DLL=1")
+#set_target_properties(Apology PROPERTIES DEFINE_SYMBOL "APOLOGY_DLL_EXPORTS")
+#set_target_properties(Apology PROPERTIES COMPILE_DEFINITIONS "APOLOGY_DLL=1")
 
 ########################################################################
 # Install the library
 ########################################################################
-#install(TARGETS apology
-#    LIBRARY DESTINATION lib/${LIB_SUFFIX} COMPONENT "devel" # .so file
-#    ARCHIVE DESTINATION lib/${LIB_SUFFIX} COMPONENT "runtime" # .lib file
-#    RUNTIME DESTINATION bin COMPONENT "runtime" # .dll file
-#)
+install(TARGETS Apology
+    LIBRARY DESTINATION lib/${LIB_SUFFIX} COMPONENT "devel" # .so file
+    ARCHIVE DESTINATION lib/${LIB_SUFFIX} COMPONENT "runtime" # .lib file
+    RUNTIME DESTINATION bin COMPONENT "runtime" # .dll file
+)

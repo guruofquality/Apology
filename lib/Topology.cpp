@@ -111,7 +111,7 @@ std::vector<Port> Topology::_resolve_ports(const Port &port, const bool do_sourc
 
         if (found_port.elem and dynamic_cast<Topology *>(found_port.elem))
         {
-            Topology *topology = reinterpret_cast<Topology *>(found_port.elem);
+            Topology *topology = dynamic_cast<Topology *>(found_port.elem);
             extend(ports, topology->_resolve_ports(found_port, do_source));
         }
     }
