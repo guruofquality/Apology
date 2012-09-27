@@ -36,8 +36,8 @@ struct Port
     //! Create an unitialized port
     Port(void);
 
-    //! Create a port from an base and IO index
-    Port(const Theron::Actor *elem, const size_t index, Wax container = Wax());
+    //! Create a port from an element and IO index
+    Port(Theron::Actor *elem, const size_t index, Wax container = Wax());
 
     //! The base in this port
     Theron::Actor *elem;

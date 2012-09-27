@@ -67,6 +67,10 @@ link_directories(${Boost_LIBRARY_DIRS})
 ########################################################################
 list(APPEND libapology_sources
     Worker.cpp
+    Topology.cpp
+    Executor.cpp
+    Port.cpp
+    Flow.cpp
     ${theron_sources}
 )
 
