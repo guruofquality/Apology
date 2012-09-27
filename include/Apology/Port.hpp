@@ -37,10 +37,10 @@ struct Port
     Port(void);
 
     //! Create a port from an element and IO index
-    Port(Theron::Actor *elem, const size_t index, Wax container = Wax());
+    Port(Base *elem, const size_t index, Wax container = Wax());
 
     //! The base in this port
-    Theron::Actor *elem;
+    Base *elem;
 
     //! The IO index of this port
     size_t index;

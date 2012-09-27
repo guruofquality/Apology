@@ -15,3 +15,21 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <Apology/Executor.hpp>
+
+using namespace Apology;
+
+Executor::Executor(void)
+{
+    //NOP
+}
+
+Executor::~Executor(void)
+{
+    _flat_flows.clear();
+    _workers.clear();
+}
+
+void Executor::commit(void)
+{
+    
+}

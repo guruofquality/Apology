@@ -26,12 +26,21 @@ namespace Apology
 {
 
 /*!
+ * A derived worker should register a message handler
+ * for this message to get an update about topology.
+ */
+struct WorkerTopologyMessage
+{
+    //empty
+};
+
+/*!
  * A worker represents a unit of computation.
  * As part of being in a topology:
  * Arbitrary messages may be accepted from upstream ports
  * and arbitrary messages may be posted to downstream ports.
  */
-struct APOLOGY_API Worker : Theron::Actor
+struct APOLOGY_API Worker : Base, Theron::Actor
 {
 public:
     //! Create a new worker actor
@@ -84,7 +93,7 @@ THERON_FORCEINLINE void Worker::post_downstream(const size_t index, const Messag
     {
         const Port &port = _outputs[index][i];
         message.index = port.index;
-        port.elem->Push(message, Theron::Address());
+        reinterpret_cast<Worker *>(port.elem)->Push(message, Theron::Address());
     }
 }
 
@@ -96,7 +105,7 @@ THERON_FORCEINLINE void Worker::post_upstream(const size_t index, const Message 
     {
         const Port &port = _inputs[index][i];
         message.index = port.index;
-        port.elem->Push(message, Theron::Address());
+        reinterpret_cast<Worker *>(port.elem)->Push(message, Theron::Address());
     }
 }
 

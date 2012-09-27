@@ -58,4 +58,12 @@
 #define APOLOGY_HERE() {std::cout << __FILE__ << ":" << __LINE__ << std::endl;}
 #define APOLOGY_VAR(var) {std::cout << #var << " = " << (var) << std::endl;}
 
+namespace Apology
+{
+    struct Base
+    {
+        //empty
+    };
+};
+
 #endif /*INCLUDED_APOLOGY_CONFIG_HPP*/

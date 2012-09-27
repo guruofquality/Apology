@@ -90,8 +90,8 @@ target_link_libraries(apology ${libapology_libs})
 ########################################################################
 # Install the library
 ########################################################################
-install(TARGETS apology
-    LIBRARY DESTINATION lib/${LIB_SUFFIX} COMPONENT "devel" # .so file
-    ARCHIVE DESTINATION lib/${LIB_SUFFIX} COMPONENT "runtime" # .lib file
-    RUNTIME DESTINATION bin COMPONENT "runtime" # .dll file
-)
+#install(TARGETS apology
+#    LIBRARY DESTINATION lib/${LIB_SUFFIX} COMPONENT "devel" # .so file
+#    ARCHIVE DESTINATION lib/${LIB_SUFFIX} COMPONENT "runtime" # .lib file
+#    RUNTIME DESTINATION bin COMPONENT "runtime" # .dll file
+#)

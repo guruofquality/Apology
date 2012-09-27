@@ -20,10 +20,11 @@ using namespace Apology;
 
 Port::Port(void)
 {
+    elem = NULL;
     index = 0;
 }
 
-Port::Port(Theron::Actor *elem, const size_t index, Wax container):
+Port::Port(Base *elem, const size_t index, Wax container):
     elem(elem), index(index), container(container)
 {
     //NOP

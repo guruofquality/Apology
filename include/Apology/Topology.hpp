@@ -19,7 +19,7 @@
 
 #include <Apology/Config.hpp>
 #include <Apology/Flow.hpp>
-#include <Theron/Actor.h>
+#include <vector>
 
 namespace Apology
 {
@@ -27,12 +27,12 @@ namespace Apology
 /*!
  * A topology describes a message flow for workers.
  */
-struct APOLOGY_API Topology : Theron::Actor
+struct APOLOGY_API Topology : Base
 {
     //! Create a new Topology
-    Topology(Theron::Framework &framework);
+    Topology(void);
 
-    //! Destroy the topology actor
+    //! Destroy the topology
     virtual ~Topology(void);
 
     /*!
@@ -40,10 +40,10 @@ struct APOLOGY_API Topology : Theron::Actor
      * Normally the hierarchy is implied by add flow:
      * This routine is reserved for a topology without IO.
      */
-    void add_topology(const Topology &topology);
+    void add_topology(Topology *topology);
 
     //! Remove a child topology from this parent.
-    void remove_topology(const Topology &topology);
+    void remove_topology(Topology *topology);
 
     //! Adds a new flow to the topology
     void add_flow(const Flow &flow);
@@ -56,6 +56,12 @@ struct APOLOGY_API Topology : Theron::Actor
      * In other words, remove all flows and sub-topologies.
      */
     void clear_all(void);
+
+    std::vector<Topology *> _topologies;
+    std::vector<Flow> _flows;
+    std::vector<Port> _resolve_src_ports(const Port &port);
+    std::vector<Port> _resolve_dst_ports(const Port &port);
+    std::vector<Flow> _resolve_flows(void);
 };
 
 } //namespace Apology

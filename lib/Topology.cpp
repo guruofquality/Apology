@@ -15,3 +15,47 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <Apology/Topology.hpp>
+#include <ApologyVecUtils.hpp>
+
+using namespace Apology;
+
+Topology::Topology(void)
+{
+    //NOP
+}
+
+Topology::~Topology(void)
+{
+    _topologies.clear();
+    _flows.clear();
+}
+
+void Topology::add_topology(Topology *topology)
+{
+    _topologies.push_back(topology);
+}
+
+void Topology::remove_topology(Topology *topology)
+{
+    if (not remove_one(_topologies, topology))
+    {
+        throw std::runtime_error("Topology::remove_topology could not find topology");
+    }
+}
+
+void Topology::add_flow(const Flow &flow_)
+{
+    //dont store container when the elem is this topology
+    Flow flow = flow_;
+    if (flow.src.elem == this) flow.src.container = Wax();
+    if (flow.dst.elem == this) flow.dst.container = Wax();
+    _flows.push_back(flow);
+}
+
+void Topology::remove_flow(const Flow &flow)
+{
+    if (not remove_one(_flows, flow))
+    {
+        throw std::runtime_error("Topology::remove_flow could not find flow");
+    }
+}
