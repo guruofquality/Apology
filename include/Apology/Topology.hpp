@@ -59,8 +59,7 @@ struct APOLOGY_API Topology : Base
 
     std::vector<Topology *> _topologies;
     std::vector<Flow> _flows;
-    std::vector<Port> _resolve_src_ports(const Port &port);
-    std::vector<Port> _resolve_dst_ports(const Port &port);
+    std::vector<Port> _resolve_ports(const Port &port, const bool);
     std::vector<Flow> _resolve_flows(void);
 };
 

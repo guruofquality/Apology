@@ -35,9 +35,7 @@ void Executor::commit(void)
     std::vector<Flow> new_flat_flows;
 
     //step 1) resolve all flows in the topology
-    {
-        new_flat_flows = _topology->_resolve_flows();
-    }
+    new_flat_flows = _topology->_resolve_flows();
 
     //step 2) determine new flows
     const std::vector<Flow> flows_to_add = vector_subtract(new_flat_flows, _flat_flows);

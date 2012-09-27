@@ -62,7 +62,7 @@ namespace Apology
 {
     struct Base
     {
-        //empty
+        virtual ~Base(void){}
     };
 };
 
