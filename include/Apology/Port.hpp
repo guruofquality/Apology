@@ -31,7 +31,7 @@ namespace Apology
  * The interpretation of port as a source of data
  * or a sink for data is up to the caller.
  */
-struct Port
+struct APOLOGY_API Port
 {
     //! Create an unitialized port
     Port(void);

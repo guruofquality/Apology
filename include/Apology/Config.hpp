@@ -55,8 +55,8 @@
 
 #include <iostream>
 
-#define APOLOGY_HERE() {std::cout << __FILE__ << ":" << __LINE__ << std::endl;}
-#define APOLOGY_VAR(var) {std::cout << #var << " = " << (var) << std::endl;}
+#define APOLOGY_HERE() {std::cerr << __FILE__ << ":" << __LINE__ << std::endl << std::flush;}
+#define APOLOGY_VAR(var) {std::cerr << #var << " = " << (var) << std::endl << std::flush;}
 
 namespace Apology
 {

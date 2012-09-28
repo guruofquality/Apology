@@ -30,32 +30,3 @@ Worker::~Worker(void)
     _inputs.clear();
     _outputs.clear();
 }
-/*
-void Worker::_handle_flow(
-    const WorkerFlowMessage &message,
-    const Theron::Address from
-){
-    const Flow &flow = message.flow;
-
-    switch (message.action)
-    {
-    case WorkerFlowMessage::SRC_ADD:
-        vector_vector_add(_outputs, flow.src.index, flow.dst);
-        break;
-
-    case WorkerFlowMessage::DST_ADD:
-        vector_vector_add(_inputs, flow.dst.index, flow.src);
-        break;
-
-    case WorkerFlowMessage::SRC_REM:
-        vector_vector_remove(_outputs, flow.src.index, flow.dst);
-        break;
-
-    case WorkerFlowMessage::DST_REM:
-        vector_vector_remove(_inputs, flow.dst.index, flow.src);
-        break;
-    }
-
-    this->Send(message, from); //ACK
-}
-*/

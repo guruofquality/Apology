@@ -23,9 +23,9 @@ if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     add_definitions(-fvisibility-inlines-hidden)
 endif()
 
-if(CMAKE_COMPILER_IS_GNUCXX AND "${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
-    add_definitions("-fPIC")
-endif()
+#if(CMAKE_COMPILER_IS_GNUCXX AND "${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
+#    add_definitions("-fPIC")
+#endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     add_definitions(-Wall)
@@ -71,26 +71,27 @@ list(APPEND libapology_sources
     Executor.cpp
     Port.cpp
     Flow.cpp
-    ${theron_sources}
+    #${theron_sources}
 )
 
 list(APPEND libapology_libs
     ${Boost_LIBRARIES}
+    theron
 )
 
 ########################################################################
 # Build the library
 ########################################################################
-add_library(Apology STATIC ${libapology_sources})
-target_link_libraries(Apology ${libapology_libs})
+add_library(apology SHARED ${libapology_sources})
+target_link_libraries(apology ${libapology_libs})
 #uncomment for SHARED library
-#set_target_properties(Apology PROPERTIES DEFINE_SYMBOL "APOLOGY_DLL_EXPORTS")
-#set_target_properties(Apology PROPERTIES COMPILE_DEFINITIONS "APOLOGY_DLL=1")
+set_target_properties(apology PROPERTIES DEFINE_SYMBOL "APOLOGY_DLL_EXPORTS")
+set_target_properties(apology PROPERTIES COMPILE_DEFINITIONS "APOLOGY_DLL=1")
 
 ########################################################################
 # Install the library
 ########################################################################
-install(TARGETS Apology
+install(TARGETS apology
     LIBRARY DESTINATION lib/${LIB_SUFFIX} COMPONENT "devel" # .so file
     ARCHIVE DESTINATION lib/${LIB_SUFFIX} COMPONENT "runtime" # .lib file
     RUNTIME DESTINATION bin COMPONENT "runtime" # .dll file

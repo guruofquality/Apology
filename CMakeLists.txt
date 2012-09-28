@@ -28,6 +28,10 @@ if(NOT CMAKE_BUILD_TYPE)
 endif(NOT CMAKE_BUILD_TYPE)
 set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING "")
 
+if(CMAKE_COMPILER_IS_GNUCXX AND "${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
+    add_definitions("-fPIC")
+endif()
+
 ########################################################################
 # Setup Boost
 ########################################################################
@@ -59,5 +63,6 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 ########################################################################
 # Do subdirectories
 ########################################################################
+add_subdirectory(Theron)
 add_subdirectory(lib)
 add_subdirectory(tests)

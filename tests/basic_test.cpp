@@ -20,6 +20,33 @@
 #include <Apology/Worker.hpp>
 #include <iostream>
 
+struct TestMessage
+{
+    //empty
+};
+
+struct MyWorker : Apology::Worker
+{
+    MyWorker(Theron::Framework &framework):
+        Apology::Worker(framework)
+    {
+        this->RegisterHandler(this, &MyWorker::handle_topology);
+        this->RegisterHandler(this, &MyWorker::handle_test);
+    }
+
+    void handle_topology(const Apology::WorkerTopologyMessage &message, const Theron::Address from)
+    {
+        APOLOGY_HERE();
+        this->Send(message, from); //ACK
+    }
+
+    void handle_test(const TestMessage &message, const Theron::Address from)
+    {
+        APOLOGY_HERE();
+        this->Send(message, from); //ACK
+    }
+};
+
 BOOST_AUTO_TEST_CASE(test_make_topology)
 {
     Apology::Topology topology;
@@ -28,8 +55,7 @@ BOOST_AUTO_TEST_CASE(test_make_topology)
 BOOST_AUTO_TEST_CASE(test_make_worker)
 {
     Theron::Framework framework(1/*thread*/);
-    Apology::Worker *w = new Apology::Worker(framework);
-    delete w;
+    MyWorker w(framework);
 }
 
 BOOST_AUTO_TEST_CASE(test_make_executor)
@@ -40,17 +66,24 @@ BOOST_AUTO_TEST_CASE(test_make_executor)
 
 BOOST_AUTO_TEST_CASE(test_simple_commit)
 {
-    Theron::Framework framework(1/*thread*/);
-    Apology::Worker *src = new Apology::Worker(framework);
-    Apology::Worker *dst = new Apology::Worker(framework);
-    Apology::Flow flow(Apology::Port(src, 0), Apology::Port(dst, 0));
+    std::cout << "about to make theron framework" << std::endl;
+    Theron::Framework framework(2/*thread*/);
+    std::cout << "about to make some of my workers" << std::endl;
+    MyWorker src(framework);
+    MyWorker dst(framework);
+    Apology::Flow flow(Apology::Port(&src, 0), Apology::Port(&dst, 0));
 
     Apology::Topology topology;
+    std::cout << "adding flow to topology" << std::endl;
     topology.add_flow(flow);
+    std::cout << "...done!" << std::endl;
 
     Apology::Executor executor(&topology);
+    std::cout << "calling executor commit" << std::endl;
     executor.commit();
+    std::cout << "...done!" << std::endl;
 
-    delete src;
-    delete dst;
+    std::cout << "post a message to all workers" << std::endl;
+    executor.post_all(TestMessage());
+    std::cout << "...done!" << std::endl;
 }
