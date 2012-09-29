@@ -50,7 +50,7 @@ struct APOLOGY_API Port
 };
 
 //! a comparison operator overload for ports
-bool operator==(const Port &lhs, const Port &rhs);
+APOLOGY_API bool operator==(const Port &lhs, const Port &rhs);
 
 } //namespace Apology
 

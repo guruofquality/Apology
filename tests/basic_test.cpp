@@ -36,13 +36,13 @@ struct MyWorker : Apology::Worker
 
     void handle_topology(const Apology::WorkerTopologyMessage &message, const Theron::Address from)
     {
-        APOLOGY_HERE();
+        std::cout << "handle_topology " << size_t(this) << std::endl;
         this->Send(message, from); //ACK
     }
 
     void handle_test(const TestMessage &message, const Theron::Address from)
     {
-        APOLOGY_HERE();
+        std::cout << "handle_test " << size_t(this) << std::endl;
         this->Send(message, from); //ACK
     }
 };
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE(test_make_topology)
 BOOST_AUTO_TEST_CASE(test_make_worker)
 {
     Theron::Framework framework(1/*thread*/);
-    MyWorker w(framework);
+    Apology::Worker w(framework);
 }
 
 BOOST_AUTO_TEST_CASE(test_make_executor)
@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE(test_make_executor)
 BOOST_AUTO_TEST_CASE(test_simple_commit)
 {
     std::cout << "about to make theron framework" << std::endl;
-    Theron::Framework framework(2/*thread*/);
+    Theron::Framework framework(1/*thread*/);
     std::cout << "about to make some of my workers" << std::endl;
     MyWorker src(framework);
     MyWorker dst(framework);

@@ -58,7 +58,6 @@ struct APOLOGY_API Executor
 template <typename Message>
 THERON_FORCEINLINE void Executor::post_all(const Message &msg)
 {
-    APOLOGY_VAR(_worker_set.size());
     for (size_t i = 0; i < _worker_set.size(); i++)
     {
         _worker_set[i]->Push(msg, _receiver.GetAddress());

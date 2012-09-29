@@ -23,44 +23,7 @@ if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     add_definitions(-fvisibility-inlines-hidden)
 endif()
 
-#if(CMAKE_COMPILER_IS_GNUCXX AND "${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
-#    add_definitions("-fPIC")
-#endif()
-
-if(CMAKE_COMPILER_IS_GNUCXX)
-    add_definitions(-Wall)
-endif()
-
-########################################################################
-# Setup Theron
-########################################################################
-include_directories(${CMAKE_SOURCE_DIR}/Theron/Include)
-include_directories(${CMAKE_SOURCE_DIR}/Theron/Include/External)
-
-if(MSVC)
-    include_directories(${CMAKE_SOURCE_DIR}/Theron/Include/External/Standard)
-endif(MSVC)
-
-if (NOT WIN32) #not on windows? tell theron headers to use boost
-    add_definitions(-DTHERON_USE_BOOST_THREADS)
-endif()
-
-file(GLOB theron_sources
-    "${CMAKE_SOURCE_DIR}/Theron/Theron/*.cpp"
-    "${CMAKE_SOURCE_DIR}/Theron/Source/*.cpp"
-)
-
-########################################################################
-# Check for support
-########################################################################
-if(NOT Boost_FOUND)
-    message(FATAL_ERROR "no boost found!")
-endif()
-
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-
-include_directories(${Boost_INCLUDE_DIRS})
-link_directories(${Boost_LIBRARY_DIRS})
 
 ########################################################################
 # The sources
@@ -71,19 +34,13 @@ list(APPEND libapology_sources
     Executor.cpp
     Port.cpp
     Flow.cpp
-    #${theron_sources}
-)
-
-list(APPEND libapology_libs
-    ${Boost_LIBRARIES}
-    theron
 )
 
 ########################################################################
 # Build the library
 ########################################################################
 add_library(apology SHARED ${libapology_sources})
-target_link_libraries(apology ${libapology_libs})
+target_link_libraries(apology ${THERON_LIBRARIES} theron)
 #uncomment for SHARED library
 set_target_properties(apology PROPERTIES DEFINE_SYMBOL "APOLOGY_DLL_EXPORTS")
 set_target_properties(apology PROPERTIES COMPILE_DEFINITIONS "APOLOGY_DLL=1")

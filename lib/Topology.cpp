@@ -17,6 +17,7 @@
 #include <Apology/Topology.hpp>
 #include <Apology/Worker.hpp>
 #include <ApologyVecUtils.hpp>
+#include <stdexcept>
 
 using namespace Apology;
 
