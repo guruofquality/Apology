@@ -89,28 +89,22 @@ std::vector<Port> Topology::_resolve_ports(const Port &port, const bool do_sourc
         const Flow &flow = _flows[i];
         Port found_port;
 
-        if (
-            do_source and
-            flow.dst.elem != this and //flow to self
-            flow.dst.index == port.index //matching port
-        ){
+        if (do_source and flow.dst == port)
+        {
             found_port = flow.src;
         }
 
-        if (
-            not do_source and
-            flow.src.elem != this and //flow to self
-            flow.src.index == port.index //matching port
-        ){
+        if (not do_source and flow.src == port)
+        {
             found_port = flow.dst;
         }
 
-        if (found_port.elem and dynamic_cast<Worker *>(found_port.elem))
+        if (dynamic_cast<Worker *>(found_port.elem))
         {
             ports.push_back(found_port);
         }
 
-        if (found_port.elem and dynamic_cast<Topology *>(found_port.elem))
+        if (dynamic_cast<Topology *>(found_port.elem))
         {
             Topology *topology = dynamic_cast<Topology *>(found_port.elem);
             extend(ports, topology->_resolve_ports(found_port, do_source));
@@ -148,7 +142,7 @@ std::vector<Flow> Topology::_resolve_flows(void)
         }
 
         //use the port if its a worker
-        if (dynamic_cast<Worker *>(flow.src.elem))
+        if (dynamic_cast<Worker *>(flow.dst.elem))
         {
             dsts.push_back(flow.dst);
         }
@@ -182,13 +176,13 @@ std::vector<Flow> Topology::_resolve_flows(void)
     {
         const Flow &flow = _flows[i];
 
-        if (flow.src.elem and dynamic_cast<Topology *>(flow.src.elem))
+        if (flow.src.elem != this and dynamic_cast<Topology *>(flow.src.elem))
         {
             remove_one(sub_topologies, flow.src.elem);
             sub_topologies.push_back(dynamic_cast<Topology *>(flow.src.elem));
         }
 
-        if (flow.dst.elem and dynamic_cast<Topology *>(flow.dst.elem))
+        if (flow.dst.elem != this and dynamic_cast<Topology *>(flow.dst.elem))
         {
             remove_one(sub_topologies, flow.dst.elem);
             sub_topologies.push_back(dynamic_cast<Topology *>(flow.dst.elem));
