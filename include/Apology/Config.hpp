@@ -51,6 +51,7 @@
 #else // APOLOGY_DLL is not defined: this means APOLOGY is a static lib.
   #define APOLOGY_API
   #define APOLOGY_LOCAL
+  #define APOLOGY_EXTERN
 #endif // APOLOGY_DLL
 
 #include <ciso646>
