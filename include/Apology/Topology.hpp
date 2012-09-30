@@ -21,6 +21,9 @@
 #include <Apology/Flow.hpp>
 #include <vector>
 
+APOLOGY_EXTERN template class APOLOGY_API std::vector<Apology::Topology *>;
+APOLOGY_EXTERN template class APOLOGY_API std::vector<Apology::Flow>;
+
 namespace Apology
 {
 

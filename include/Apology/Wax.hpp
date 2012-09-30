@@ -19,7 +19,8 @@
 
 #include <Apology/Config.hpp>
 #include <typeinfo>
-#include <new>
+#include <new> //in-place new
+#include <cstddef> //null
 
 namespace Apology
 {
@@ -36,7 +37,7 @@ namespace Apology
  * integers, floats, and in particular, shared and intrusive pointers.
  * Larger objects cannot be supported due to the fixed-size buffer.
  */
-class Wax
+class APOLOGY_API Wax
 {
 public:
 

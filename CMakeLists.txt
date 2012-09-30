@@ -32,6 +32,8 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     add_definitions(-Wall)
 endif()
 
+add_definitions(-DAPOLOGY_DLL=1) #this test project builds a dll
+
 ########################################################################
 # Setup Theron Deps
 ########################################################################

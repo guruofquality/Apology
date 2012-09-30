@@ -42,8 +42,10 @@
 #ifdef APOLOGY_DLL // defined if APOLOGY is compiled as a DLL
   #ifdef APOLOGY_DLL_EXPORTS // defined if we are building the APOLOGY DLL (instead of using it)
     #define APOLOGY_API APOLOGY_HELPER_DLL_EXPORT
+    #define APOLOGY_EXTERN
   #else
     #define APOLOGY_API APOLOGY_HELPER_DLL_IMPORT
+    #define APOLOGY_EXTERN extern
   #endif // APOLOGY_DLL_EXPORTS
   #define APOLOGY_LOCAL APOLOGY_HELPER_DLL_LOCAL
 #else // APOLOGY_DLL is not defined: this means APOLOGY is a static lib.
@@ -53,17 +55,16 @@
 
 #include <ciso646>
 
-#include <iostream>
-
-#define APOLOGY_HERE() {std::cerr << __FILE__ << ":" << __LINE__ << std::endl << std::flush;}
-#define APOLOGY_VAR(var) {std::cerr << #var << " = " << (var) << std::endl << std::flush;}
-
 namespace Apology
 {
-    struct Base
+    struct APOLOGY_API Base
     {
         virtual ~Base(void){}
     };
+
+    struct Worker;
+
+    struct Topology;
 };
 
 #endif /*INCLUDED_APOLOGY_CONFIG_HPP*/

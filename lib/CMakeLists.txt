@@ -41,9 +41,7 @@ list(APPEND libapology_sources
 ########################################################################
 add_library(apology SHARED ${libapology_sources})
 target_link_libraries(apology ${THERON_LIBRARIES} theron)
-#uncomment for SHARED library
 set_target_properties(apology PROPERTIES DEFINE_SYMBOL "APOLOGY_DLL_EXPORTS")
-set_target_properties(apology PROPERTIES COMPILE_DEFINITIONS "APOLOGY_DLL=1")
 
 ########################################################################
 # Install the library

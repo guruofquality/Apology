@@ -22,6 +22,9 @@
 #include <Theron/Actor.h>
 #include <vector>
 
+APOLOGY_EXTERN template class APOLOGY_API std::vector<Apology::Worker *>;
+APOLOGY_EXTERN template class APOLOGY_API std::vector<std::vector<Apology::Port> >;
+
 namespace Apology
 {
 
@@ -29,7 +32,7 @@ namespace Apology
  * A derived worker should register a message handler
  * for this message to get an update about topology.
  */
-struct WorkerTopologyMessage
+struct APOLOGY_API WorkerTopologyMessage
 {
     //empty
 };
