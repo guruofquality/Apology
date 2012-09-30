@@ -45,7 +45,6 @@ struct APOLOGY_API WorkerTopologyMessage
  */
 struct APOLOGY_API Worker : Base, Theron::Actor
 {
-public:
     //! Create a new worker actor
     Worker(Theron::Framework &framework);
 
