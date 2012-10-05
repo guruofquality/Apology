@@ -21,7 +21,6 @@
 #include <Apology/Topology.hpp>
 #include <Apology/Worker.hpp>
 #include <Apology/Flow.hpp>
-#include <Theron/Defines.h>
 #include <vector>
 
 namespace Apology

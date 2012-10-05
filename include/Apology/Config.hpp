@@ -68,4 +68,6 @@ namespace Apology
     struct Topology;
 };
 
+#include <Theron/Defines.h>
+
 #endif /*INCLUDED_APOLOGY_CONFIG_HPP*/
