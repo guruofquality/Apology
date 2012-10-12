@@ -29,3 +29,5 @@ Worker::~Worker(void)
     _inputs.clear();
     _outputs.clear();
 }
+
+THERON_DEFINE_REGISTERED_MESSAGE(Apology::WorkerTopologyMessage);

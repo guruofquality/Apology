@@ -113,4 +113,8 @@ THERON_FORCEINLINE void Worker::post_upstream(const size_t index, const Message 
 
 } //namespace Apology
 
+#include <Theron/Register.h>
+
+THERON_DECLARE_REGISTERED_MESSAGE(Apology::WorkerTopologyMessage);
+
 #endif /*INCLUDED_APOLOGY_WORKER_HPP*/
