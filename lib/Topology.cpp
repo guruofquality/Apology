@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <Apology/Executor.hpp>
 #include <Apology/Topology.hpp>
 #include <Apology/Worker.hpp>
 #include <ApologyVecUtils.hpp>
@@ -35,6 +36,11 @@ void Topology::clear_all(void)
 {
     _topologies.clear();
     _flows.clear();
+}
+
+void Topology::commit(void)
+{
+    return _executor->commit();
 }
 
 void Topology::add_topology(Topology *topology)
@@ -114,7 +120,7 @@ std::vector<Port> Topology::_resolve_ports(const Port &port, const bool do_sourc
     return ports;
 }
 
-std::vector<Flow> Topology::_resolve_flows(void)
+std::vector<Flow> Topology::_resolve_flows(Executor *executor)
 {
     std::vector<Flow> flat_flows;
 
@@ -193,7 +199,8 @@ std::vector<Flow> Topology::_resolve_flows(void)
     for (size_t i = 0; i < sub_topologies.size(); i++)
     {
         Topology *topology = sub_topologies[i];
-        extend(flat_flows, topology->_resolve_flows());
+        topology->_executor = executor;
+        extend(flat_flows, topology->_resolve_flows(executor));
     }
 
     return flat_flows;

@@ -60,10 +60,17 @@ struct APOLOGY_API Topology : Base
      */
     void clear_all(void);
 
+    /*!
+     * Call commit on the top level executor.
+     * Only call this when topology has been committed to a design.
+     */
+    void commit(void);
+
+    Executor *_executor;
     std::vector<Topology *> _topologies;
     std::vector<Flow> _flows;
     std::vector<Port> _resolve_ports(const Port &port, const bool);
-    std::vector<Flow> _resolve_flows(void);
+    std::vector<Flow> _resolve_flows(Executor *executor);
 };
 
 } //namespace Apology
