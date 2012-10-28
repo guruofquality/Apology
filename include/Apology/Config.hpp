@@ -66,6 +66,8 @@ namespace Apology
     struct Worker;
 
     struct Topology;
+
+    struct Executor;
 };
 
 #include <Theron/Defines.h>
