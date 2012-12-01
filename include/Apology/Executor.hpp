@@ -46,7 +46,12 @@ THERON_FORCEINLINE void Executor::post_all(const Message &msg)
     for (size_t i = 0; i < _worker_set.size(); i++)
     {
         _worker_set[i]->Push(msg, _receiver.GetAddress());
-        _receiver.Wait();
+    }
+
+    size_t outstandingCount(_worker_set.size());
+    while (outstandingCount != 0)
+    {
+        outstandingCount -= _receiver.Wait(outstandingCount);
     }
 }
 
