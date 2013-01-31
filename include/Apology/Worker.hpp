@@ -8,8 +8,10 @@
 #include <Theron/Actor.h>
 #include <vector>
 
+#ifdef _MSC_VER //remove some template export warnings
 APOLOGY_EXTERN template class APOLOGY_API std::vector<Apology::Worker *>;
 APOLOGY_EXTERN template class APOLOGY_API std::vector<std::vector<Apology::Port> >;
+#endif
 
 namespace Apology
 {

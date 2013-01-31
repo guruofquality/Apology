@@ -7,8 +7,10 @@
 #include <Apology/Flow.hpp>
 #include <vector>
 
+#ifdef _MSC_VER //remove some template export warnings
 APOLOGY_EXTERN template class APOLOGY_API std::vector<Apology::Topology *>;
 APOLOGY_EXTERN template class APOLOGY_API std::vector<Apology::Flow>;
+#endif
 
 namespace Apology
 {
