@@ -81,7 +81,7 @@ THERON_FORCEINLINE void Worker::post_downstream(const size_t index, const Messag
     {
         const Port &port = _outputs[index][i];
         message.index = port.index;
-        reinterpret_cast<Worker *>(port.elem)->Push(message, Theron::Address());
+        this->Send(message, reinterpret_cast<Worker *>(port.elem)->GetAddress());
     }
 }
 
@@ -93,7 +93,7 @@ THERON_FORCEINLINE void Worker::post_upstream(const size_t index, const Message 
     {
         const Port &port = _inputs[index][i];
         message.index = port.index;
-        reinterpret_cast<Worker *>(port.elem)->Push(message, Theron::Address());
+        this->Send(message, reinterpret_cast<Worker *>(port.elem)->GetAddress());
     }
 }
 
