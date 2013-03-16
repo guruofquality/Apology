@@ -34,11 +34,8 @@ struct APOLOGY_API Executor
     template <typename Message>
     void post_all(const Message &msg);
 
-    /*!
-     * Post a message to all blocks in the topology.
-     */
-    template <typename Message>
-    void post_all(const Message &msg, Theron::Receiver &receiver);
+    //! Get a const iterator to the workers in this executor
+    const std::vector<Worker *> &get_workers(void) const;
 
     Topology *_topology;
     std::vector<Flow> _flat_flows;
@@ -61,22 +58,9 @@ THERON_FORCEINLINE void Executor::post_all(const Message &msg)
     }
 }
 
-template <typename Message>
-THERON_FORCEINLINE void Executor::post_all(
-    const Message &msg,
-    Theron::Receiver &receiver
-)
+THERON_FORCEINLINE const std::vector<Worker *> &Executor::get_workers(void) const
 {
-    for (size_t i = 0; i < _worker_set.size(); i++)
-    {
-        _worker_set[i]->Push(msg, receiver.GetAddress());
-    }
-
-    size_t outstandingCount(_worker_set.size());
-    while (outstandingCount != 0)
-    {
-        outstandingCount -= receiver.Wait(outstandingCount);
-    }
+    return _worker_set;
 }
 
 } //namespace Apology
