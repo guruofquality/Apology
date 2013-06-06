@@ -91,28 +91,26 @@ THERON_FORCEINLINE size_t Worker::get_num_outputs(void) const
 template <typename Message>
 THERON_FORCEINLINE void Worker::post_downstream(const size_t index, const Message &msg) const
 {
-    Theron::Actor *actor = this->get_actor();
     Message message = msg;
     for (size_t i = 0; i < _outputs[index].size(); i++)
     {
         const Port &port = _outputs[index][i];
         message.index = port.index;
-        Theron::Actor *dest = reinterpret_cast<Worker *>(port.elem)->get_actor();
-        actor->GetFramework().Send(message, actor->GetAddress(), dest->GetAddress());
+        Theron::Actor *actor = reinterpret_cast<Worker *>(port.elem)->get_actor();
+        actor->GetFramework().Send(message, Theron::Address::Null(), actor->GetAddress());
     }
 }
 
 template <typename Message>
 THERON_FORCEINLINE void Worker::post_upstream(const size_t index, const Message &msg) const
 {
-    Theron::Actor *actor = this->get_actor();
     Message message = msg;
     for (size_t i = 0; i < _inputs[index].size(); i++)
     {
         const Port &port = _inputs[index][i];
         message.index = port.index;
-        Theron::Actor *dest = reinterpret_cast<Worker *>(port.elem)->get_actor();
-        actor->GetFramework().Send(message, actor->GetAddress(), dest->GetAddress());
+        Theron::Actor *actor = reinterpret_cast<Worker *>(port.elem)->get_actor();
+        actor->GetFramework().Send(message, Theron::Address::Null(), actor->GetAddress());
     }
 }
 
