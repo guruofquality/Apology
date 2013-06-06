@@ -4,8 +4,7 @@
 
 using namespace Apology;
 
-Worker::Worker(Theron::Framework &framework):
-    Theron::Actor(framework)
+Worker::Worker(void)
 {
     //NOP
 }
@@ -14,6 +13,11 @@ Worker::~Worker(void)
 {
     _inputs.clear();
     _outputs.clear();
+}
+
+void Worker::set_actor(Theron::Actor *actor)
+{
+    _actor = actor;
 }
 
 THERON_DEFINE_REGISTERED_MESSAGE(Apology::WorkerTopologyMessage);

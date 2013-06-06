@@ -11,13 +11,13 @@ struct TestMessage
     //empty
 };
 
-struct MyWorker : Apology::Worker
+struct MyActor : Theron::Actor
 {
-    MyWorker(Theron::Framework &framework):
-        Apology::Worker(framework)
+    MyActor(Theron::Framework &framework):
+        Theron::Actor(framework)
     {
-        this->RegisterHandler(this, &MyWorker::handle_topology);
-        this->RegisterHandler(this, &MyWorker::handle_test);
+        this->RegisterHandler(this, &MyActor::handle_topology);
+        this->RegisterHandler(this, &MyActor::handle_test);
     }
 
     void handle_topology(const Apology::WorkerTopologyMessage &message, const Theron::Address from)
@@ -33,6 +33,19 @@ struct MyWorker : Apology::Worker
     }
 };
 
+struct MyWorker : Apology::Worker
+{
+    MyWorker(Theron::Framework &framework)
+    {
+        this->set_actor(new MyActor(framework));
+    }
+
+    ~MyWorker(void)
+    {
+        delete this->get_actor();
+    }
+};
+
 BOOST_AUTO_TEST_CASE(test_make_topology)
 {
     Apology::Topology topology;
@@ -40,8 +53,7 @@ BOOST_AUTO_TEST_CASE(test_make_topology)
 
 BOOST_AUTO_TEST_CASE(test_make_worker)
 {
-    Theron::Framework framework(1/*thread*/);
-    Apology::Worker w(framework);
+    Apology::Worker w;
 }
 
 BOOST_AUTO_TEST_CASE(test_make_executor)

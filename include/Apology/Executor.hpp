@@ -49,8 +49,8 @@ THERON_FORCEINLINE void Executor::post_all(const Message &msg)
 {
     for (size_t i = 0; i < _worker_set.size(); i++)
     {
-        Theron::Actor &actor = *_worker_set[i];
-        actor.GetFramework().Send(msg, _receiver.GetAddress(), actor.GetAddress());
+        Theron::Actor *actor = _worker_set[i]->get_actor();
+        actor->GetFramework().Send(msg, _receiver.GetAddress(), actor->GetAddress());
     }
 
     size_t outstandingCount(_worker_set.size());

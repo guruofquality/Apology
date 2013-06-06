@@ -27,17 +27,24 @@ struct APOLOGY_API WorkerTopologyMessage
 
 /*!
  * A worker represents a unit of computation.
+ * A worker contains an actor.
  * As part of being in a topology:
  * Arbitrary messages may be accepted from upstream ports
  * and arbitrary messages may be posted to downstream ports.
  */
-struct APOLOGY_API Worker : Base, Theron::Actor
+struct APOLOGY_API Worker : Base
 {
-    //! Create a new worker actor
-    Worker(Theron::Framework &framework);
+    //! Create a new worker
+    Worker(void);
 
-    //! Destroy the worker actor
+    //! Destroy the worker
     virtual ~Worker(void);
+
+    //! Set the active actor
+    void set_actor(Theron::Actor *actor);
+
+    //! Get the active actor
+    Theron::Actor *get_actor(void) const;
 
     //! Get the number of input ports
     size_t get_num_inputs(void) const;
@@ -63,7 +70,13 @@ struct APOLOGY_API Worker : Base, Theron::Actor
 
     std::vector<std::vector<Port> > _inputs;
     std::vector<std::vector<Port> > _outputs;
+    Theron::Actor *_actor;
 };
+
+THERON_FORCEINLINE Theron::Actor *Worker::get_actor(void) const
+{
+    return _actor;
+}
 
 THERON_FORCEINLINE size_t Worker::get_num_inputs(void) const
 {
@@ -78,24 +91,28 @@ THERON_FORCEINLINE size_t Worker::get_num_outputs(void) const
 template <typename Message>
 THERON_FORCEINLINE void Worker::post_downstream(const size_t index, const Message &msg) const
 {
+    Theron::Actor *actor = this->get_actor();
     Message message = msg;
     for (size_t i = 0; i < _outputs[index].size(); i++)
     {
         const Port &port = _outputs[index][i];
         message.index = port.index;
-        this->Send(message, reinterpret_cast<Worker *>(port.elem)->GetAddress());
+        Theron::Actor *dest = reinterpret_cast<Worker *>(port.elem)->get_actor();
+        actor->GetFramework().Send(message, actor->GetAddress(), dest->GetAddress());
     }
 }
 
 template <typename Message>
 THERON_FORCEINLINE void Worker::post_upstream(const size_t index, const Message &msg) const
 {
+    Theron::Actor *actor = this->get_actor();
     Message message = msg;
     for (size_t i = 0; i < _inputs[index].size(); i++)
     {
         const Port &port = _inputs[index][i];
         message.index = port.index;
-        this->Send(message, reinterpret_cast<Worker *>(port.elem)->GetAddress());
+        Theron::Actor *dest = reinterpret_cast<Worker *>(port.elem)->get_actor();
+        actor->GetFramework().Send(message, actor->GetAddress(), dest->GetAddress());
     }
 }
 
