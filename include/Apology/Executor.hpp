@@ -38,6 +38,12 @@ struct APOLOGY_API Executor
     //! Get a const iterator to the workers in this executor
     const std::vector<Worker *> &get_workers(void) const;
 
+    /*!
+     * Get a const iterator to the flattened flows in this executor.
+     * All ports contain pointers to workers and not topologies.
+     */
+    const std::vector<Flow> &get_flat_flows(void) const;
+
     Topology *_topology;
     std::vector<Flow> _flat_flows;
     std::vector<Worker *> _worker_set;
@@ -58,11 +64,6 @@ THERON_FORCEINLINE void Executor::post_all(const Message &msg)
     {
         outstandingCount -= _receiver.Wait(outstandingCount);
     }
-}
-
-THERON_FORCEINLINE const std::vector<Worker *> &Executor::get_workers(void) const
-{
-    return _worker_set;
 }
 
 } //namespace Apology

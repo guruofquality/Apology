@@ -86,3 +86,13 @@ void Executor::commit(void)
         insert_unique(_worker_set, reinterpret_cast<Worker *>(flow.dst.elem));
     }
 }
+
+const std::vector<Worker *> &Executor::get_workers(void) const
+{
+    return _worker_set;
+}
+
+const std::vector<Flow> &Executor::get_flat_flows(void) const
+{
+    return _flat_flows;
+}

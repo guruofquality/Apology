@@ -54,6 +54,12 @@ struct APOLOGY_API Topology : Base
      */
     void commit(void);
 
+    //! Get a const iterator to the sub topologies in this topology
+    const std::vector<Topology *> &get_topologies(void) const;
+
+    //! Get a const iterator to the flows in this topology
+    const std::vector<Flow> &get_flows(void) const;
+
     Executor *_executor;
     std::vector<Topology *> _topologies;
     std::vector<Flow> _flows;

@@ -59,6 +59,16 @@ void Topology::remove_flow(const Flow &flow)
     }
 }
 
+const std::vector<Topology *> &Topology::get_topologies(void) const
+{
+    return _topologies;
+}
+
+const std::vector<Flow> &Topology::get_flows(void) const
+{
+    return _flows;
+}
+
 std::vector<Port> Topology::_resolve_ports(const Port &port, const bool do_source)
 {
     std::vector<Port> ports;
