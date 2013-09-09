@@ -60,6 +60,15 @@ struct APOLOGY_API Topology : Base
     //! Get a const iterator to the flows in this topology
     const std::vector<Flow> &get_flows(void) const;
 
+    //! Get a list of all workers in this executor
+    std::vector<Worker *> get_workers(void);
+
+    /*!
+     * Get a list of all flattened flows in this executor.
+     * All ports contain pointers to workers and not topologies.
+     */
+    std::vector<Flow> get_flat_flows(void);
+
     Executor *_executor;
     std::vector<Topology *> _topologies;
     std::vector<Flow> _flows;

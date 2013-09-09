@@ -201,3 +201,20 @@ std::vector<Flow> Topology::_resolve_flows(Executor *executor)
 
     return flat_flows;
 }
+
+std::vector<Worker *> Topology::get_workers(void)
+{
+    std::vector<Worker *> worker_set;
+    const std::vector<Flow> flows = this->get_flat_flows();
+    for (size_t i = 0; i < flows.size(); i++)
+    {
+        insert_unique(worker_set, reinterpret_cast<Worker *>(flows[i].src.elem));
+        insert_unique(worker_set, reinterpret_cast<Worker *>(flows[i].dst.elem));
+    }
+    return worker_set;
+}
+
+std::vector<Flow> Topology::get_flat_flows(void)
+{
+    return this->_resolve_flows(this->_executor);
+}

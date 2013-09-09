@@ -35,15 +35,6 @@ struct APOLOGY_API Executor
     template <typename Message>
     void post_all(const Message &msg);
 
-    //! Get a const iterator to the workers in this executor
-    const std::vector<Worker *> &get_workers(void) const;
-
-    /*!
-     * Get a const iterator to the flattened flows in this executor.
-     * All ports contain pointers to workers and not topologies.
-     */
-    const std::vector<Flow> &get_flat_flows(void) const;
-
     Topology *_topology;
     std::vector<Flow> _flat_flows;
     std::vector<Worker *> _worker_set;
